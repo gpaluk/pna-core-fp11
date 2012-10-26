@@ -36,7 +36,7 @@ package io.plugin.pna.loop
 		public var onDraw: Signal;
 		
 		/**
-		 * returned params ( mAccumulator: int )
+		 * returned params ( alpha: Number )
 		 */
 		public var onAlpha: Signal;
 		
