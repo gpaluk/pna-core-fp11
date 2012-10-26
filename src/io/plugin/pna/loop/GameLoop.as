@@ -51,27 +51,39 @@ package io.plugin.pna.loop
 		protected var mDT: int;
 		protected var mCurrentTime: int;
 		protected var mAccumulator: int;
-		
-		// disposed flag
-		protected var mIsDisposed: Boolean;
-		
-		// loop states
-		protected var mUpdateCount: int;
-		protected var mDrawCount: int;
-		
 		protected var mStartTime: int;
 		protected var mElapsed: int;
-		
 		protected var mLastTimePaused:int;
 		protected var mTotalTimePaused: int;
+		
+		// flags
+		protected var mDrawCount: int;
+		protected var mUpdateCount: int;
+		
+		// states
 		protected var mIsPaused: Boolean;
+		protected var mIsRunning:Boolean;
+		protected var mIsDisposed: Boolean;
 		
 		/**
-		 * Creates a game loop used to provide a fixed time step and alpha interpolation
-		 * for use in games and other applications. Whilst fixed time steps are usful
-		 * for many applications, their use in determanistic systems is essential. The
-		 * Game loop class is useful but not limited to physics systems, data mining & 
-		 * game replay data.
+		 * Creates a GameLoop that encapsulates and provides a fixed time step and alpha
+		 * interpolation mechanism for use in games and other applications. Whilst fixed
+		 * time steps are useful for many applications, their use in determanistic systems
+		 * is assumed. The GameLoop class can be used, but is not limited to handling such
+		 * things as physics systems, data mining & game replay data.
+		 * 
+		 * @usage 
+		 * <code>
+		 * var gameLoop: GameLoop = new GameLoop();
+		 * gameLoop.onUpdate.add( callBack );
+		 * gameLoop.start();
+		 * 
+		 * function callBack( t: int, dt: int ): void
+		 * {
+		 * 		trace( "Time: " + t + ", DeltaTime: " + dt );
+		 * }
+		 * </code>
+		 * 
 		 * 
 		 * @param	timeStep The game loop update frequency
 		 */
@@ -91,6 +103,12 @@ package io.plugin.pna.loop
 		 */
 		public function start(): void
 		{
+			if ( mIsRunning )
+			{
+				return;
+			}
+			
+			mIsRunning = true;
 			mStartTime = getTimer();
 			
 			mTimer = new Timer( mDT );
@@ -120,6 +138,8 @@ package io.plugin.pna.loop
 			mTotalTimePaused = 0;
 			mIsPaused = false;
 			
+			mIsRunning = false;
+			
 			mTimer.stop();
 			mTimer.removeEventListener( TimerEvent.TIMER, tick );
 			mTimer = null;
@@ -129,7 +149,7 @@ package io.plugin.pna.loop
 		
 		
 		/**
-		 * Resumes the gameloop after being paused.
+		 * Resumes the GameLoop after being paused.
 		 */
 		public function resume(): void
 		{
@@ -146,7 +166,7 @@ package io.plugin.pna.loop
 		}
 		
 		/**
-		 * Pauses the gameloop.
+		 * Pauses the GameLoop.
 		 */
 		public function pause(): void
 		{
@@ -185,7 +205,7 @@ package io.plugin.pna.loop
 		}
 		
 		/**
-		 * TRUE if the pause() method has been called and the gameloop is paused.
+		 * TRUE if the pause() method has been called and the GameLoop is paused.
 		 */
 		public function get isPaused(): Boolean
 		{
@@ -193,7 +213,7 @@ package io.plugin.pna.loop
 		}
 		
 		/**
-		 * Called by the Timer to process the next tick of the gameloop.
+		 * Called by the Timer to process the next tick of the GameLoop.
 		 * 
 		 * @param	e	The TimerEvent passed by the Timer object.
 		 */
@@ -229,7 +249,7 @@ package io.plugin.pna.loop
 		}
 		
 		/**
-		 * Checks if the gameloop has been disposed, TRUE if the gameloop is desposed, FALSE if not.
+		 * Checks if the GameLoop has been disposed, TRUE if the GameLoop is desposed, FALSE if not.
 		 */
 		public function get isDisposed(): Boolean
 		{
@@ -273,6 +293,14 @@ package io.plugin.pna.loop
 			return mDrawCount;
 		}
 		
+		/**
+		 * Returns if the GameLoop is in the running state. isRunning will be TRUE whilst the start()
+		 * method has been called (Even if the loop is paused). 
+		 */
+		public function get isRunning(): Boolean
+		{
+			return mIsRunning;
+		}
 	}
 
 }
