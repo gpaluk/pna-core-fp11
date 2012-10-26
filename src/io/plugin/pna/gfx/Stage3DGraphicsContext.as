@@ -14,7 +14,7 @@ package io.plugin.pna.gfx
 	 * ...
 	 * @author Gary Paluk - http://www.plugin.io
 	 */
-	public class Stage3DGraphicsContext implements IGraphic
+	public class Stage3DGraphicsContext implements IGraphicsContext
 	{
 		
 		public var mContext: Context3D;

@@ -23,7 +23,7 @@ package io.plugin.pna.integrators
 		public var orientation: HQuaternion = new HQuaternion();
 		public var angularMomentum: AVector = new AVector();
 		
-		// secondry state
+		// secondary state
 		public var velocity: AVector = new AVector();
 		public var spin: HQuaternion = new HQuaternion();
 		public var angularVelocity: AVector = new AVector();
@@ -34,22 +34,26 @@ package io.plugin.pna.integrators
 		public var size: Number = 0;
 		public var mass: Number = 0;
 		public var inverseMass: Number = 0;
-		public var inertialTensor: Number = 0;
-		public var inverseInertialTensor: Number = 0;
+		public var inertiaTensor: Number = 0;
+		public var inverseInertiaTensor: Number = 0;
 		
-		public function RK4State3D() 
+		public function RK4State() 
 		{
-			
 		}
 		
 		public function recalculate(): void
 		{
-			velocity = momentum.multiply( inverseMass );
-			angularVelocity = angularMomentum.multiply( inertialTensor );
+			velocity = momentum.scale( inverseMass );
+			angularVelocity = angularMomentum.scale( inverseInertiaTensor );			
 			orientation.normalize();
-			spin = new HQuaternion( 0, angularVelocity.x * 0.5, angularVelocity.y * 0.5, angularVelocity.z * 0.5 ).multiply( orientation );
 			
-			var translation: HMatrix = new HMatrix().translateAVectorEq( position );
+			//trace( angularMomentum );
+			
+			spin = new HQuaternion( 0, angularVelocity.x, angularVelocity.y, angularVelocity.z ).multiply( orientation ).scale( 0.5 );
+			
+			var translation: HMatrix = new HMatrix()
+			translation.translateAVectorEq( position );
+			
 			bodyToWorld = translation.multiply( orientation.toRotationMatrix() );
 			worldToBody = bodyToWorld.inverse();
 		}

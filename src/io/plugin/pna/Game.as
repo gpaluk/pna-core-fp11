@@ -25,7 +25,6 @@ package io.plugin.pna
 		public function Game() 
 		{
 			content = new ContentManager( services );
-			
 		}
 		
 		
@@ -86,7 +85,7 @@ package io.plugin.pna
 		//}
 		
 		//{ region Graphics Device Manager (use direct hookup)
-		
+		//TODO add direct hookup
 		private var mGraphicsDeviceManager: GraphicsDeviceManager = null;
 		
 		/**
@@ -251,7 +250,7 @@ package io.plugin.pna
 			}
 		}
 		
-		protected function draw( t: Number ): void
+		protected function draw( alpha: Number ): void
 		{
 			// TODO draw the components
 			
