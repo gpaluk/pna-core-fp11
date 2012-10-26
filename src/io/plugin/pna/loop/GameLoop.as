@@ -185,23 +185,27 @@ package io.plugin.pna.loop
 		 */
 		public function dispose(): void
 		{
-			mTimer.stop();
-			mTimer.removeEventListener( TimerEvent.TIMER, tick );
-			mTimer = null;
+			if ( !isDisposed )
+			{
+				mTimer.stop();
+				mTimer.removeEventListener( TimerEvent.TIMER, tick );
+				mTimer = null;
+				
+				onTick.removeAll();
+				onUpdate.removeAll();
+				onDraw.removeAll();
+				onAlpha.removeAll();
+				onReset.removeAll();
+				
+				onTick = null;
+				onUpdate = null;
+				onDraw = null;
+				onAlpha = null;
+				onReset = null;
+				
+				mIsDisposed = true;
+			}
 			
-			onTick.removeAll();
-			onUpdate.removeAll();
-			onDraw.removeAll();
-			onAlpha.removeAll();
-			onReset.removeAll();
-			
-			onTick = null;
-			onUpdate = null;
-			onDraw = null;
-			onAlpha = null;
-			onReset = null;
-			
-			mIsDisposed = true;
 		}
 		
 		/**

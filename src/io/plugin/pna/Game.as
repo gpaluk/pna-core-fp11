@@ -39,6 +39,8 @@ package io.plugin.pna
 			
 			gameLoop.onDraw.add( draw );
 			gameLoop.onUpdate.add( update );
+			gameLoop.start();
+			
 			doStartup();
 		}
 		//}
