@@ -122,6 +122,11 @@ package io.plugin.pna.loop
 		 */
 		public function reset(): void
 		{
+			if ( !isRunning )
+			{
+				return;
+			}
+			
 			mT = 0;
 			mCurrentTime = 0;
 			mStartTime = 0;
@@ -171,6 +176,11 @@ package io.plugin.pna.loop
 		public function pause(): void
 		{
 			if ( mIsPaused )
+			{
+				return;
+			}
+			
+			if ( !isRunning )
 			{
 				return;
 			}
