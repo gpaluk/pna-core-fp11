@@ -252,6 +252,22 @@ package io.plugin.pna.utils.mappers
 		}
 		
 		/**
+		 * Returns the state of the key, TRUE if pressed, otherwise FALSE
+		 * 
+		 * @param	keyCode	The keyCode of the key to check
+		 * 
+		 * @return	The state of the key, TRUE if pressed, otherwise FALSE
+		 */
+		public function isKeyDown( keyCode: uint ): Boolean
+		{
+			if ( _keyStates[ keyCode ] )
+			{
+				return _keyStates[ keyCode ];
+			}
+			return false;
+		}
+		
+		/**
 		 * Disposes of this Object ready for the GC
 		 */
 		public function dispose(): void
