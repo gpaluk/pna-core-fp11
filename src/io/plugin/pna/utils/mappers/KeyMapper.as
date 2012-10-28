@@ -260,11 +260,11 @@ package io.plugin.pna.utils.mappers
 		 */
 		public function isKeyDown( keyCode: uint ): Boolean
 		{
-			if ( _keyStates[ keyCode ] )
+			if ( _keyDownMap[ keyCode ] )
 			{
 				return _keyStates[ keyCode ];
 			}
-			return false;
+			throw new Error( "You must apply the addKeyDown() method to track key states. KeyMapper::isKeyDown()" );
 		}
 		
 		/**
