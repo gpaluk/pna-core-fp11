@@ -59,8 +59,14 @@ package io.plugin.pna.utils.mappers
 		 */
 		protected var _keyStates:Dictionary;
 		
-		
+		/**
+		 * Parameters to be sent to the onDown callback methods
+		 */
 		protected var _callbackDownParams: Dictionary;
+		
+		/**
+		 * Parameters to be sent to the onUp callback methods
+		 */
 		protected var _callbackUpParams: Dictionary;
 		
 		/**
@@ -96,7 +102,8 @@ package io.plugin.pna.utils.mappers
 		 * 
 		 * @param	keyCode		The keycode to map, such as Keyboard.ENTER or Keyboard.B
 		 * @param	autoRepeat	Callback executed on each keyboard BIOS update when TRUE, update only occurs once when FALSE
-		 * @param	rest		A single method or list of methods to call
+		 * @param	callback	A function that is called upon the relevant event dispatch
+		 * @param	rest		A list of params to be sent to the callback method
 		 * 
 		 * @return	This <code>KeyMapper</code> Object
 		 */
