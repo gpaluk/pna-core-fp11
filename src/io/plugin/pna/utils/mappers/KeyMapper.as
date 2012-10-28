@@ -173,8 +173,9 @@ package io.plugin.pna.utils.mappers
 		/**
 		 * Maps a keyUp event to a single method or list of methods.
 		 * 
-		 * @param	keyCode	The keycode to map, such as Keyboard.ENTER or Keyboard.B
-		 * @param	...rest	A single method or list of methods to call
+		 * @param	keyCode		The keycode to map, such as Keyboard.ENTER or Keyboard.B
+		 * @param	callback	A function that is called upon the relevant event dispatch
+		 * @param	...rest		A list of params to be sent to the callback method
 		 * 
 		 * @return	this Object
 		 */
