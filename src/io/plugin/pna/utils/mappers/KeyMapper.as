@@ -59,6 +59,10 @@ package io.plugin.pna.utils.mappers
 		 */
 		protected var _keyStates:Dictionary;
 		
+		
+		protected var _callbackDownParams: Dictionary;
+		protected var _callbackUpParams: Dictionary;
+		
 		/**
 		 * A Boolean indicating if the Object has been disposed by calling the dispose() method.
 		 */
@@ -77,6 +81,8 @@ package io.plugin.pna.utils.mappers
 			_keyUpMap = new Dictionary();
 			_keyRepeat = new Dictionary();
 			_keyStates = new Dictionary();
+			_callbackDownParams = new Dictionary();
+			_callbackUpParams = new Dictionary();
 			
 			_stage.addEventListener( KeyboardEvent.KEY_DOWN, onKeyDown );
 			_stage.addEventListener( KeyboardEvent.KEY_UP, onKeyUp );
@@ -94,10 +100,15 @@ package io.plugin.pna.utils.mappers
 		 * 
 		 * @return	This <code>KeyMapper</code> Object
 		 */
-		public function addKeyDown( keyCode: uint, autoRepeat: Boolean = false, ...rest ): KeyMapper
+		public function addKeyDown( keyCode: uint, autoRepeat: Boolean = false, callback: Function = null, ...rest ): KeyMapper
 		{
-			_keyDownMap[ keyCode ] = rest;
+			_keyDownMap[ keyCode ] = callback;
 			_keyRepeat[ keyCode ] = autoRepeat;
+			
+			if ( rest.length > 0 )
+			{
+				_callbackDownParams[ keyCode ] = rest;
+			}
 			
 			return this;
 		}
@@ -116,6 +127,7 @@ package io.plugin.pna.utils.mappers
 				_keyDownMap[ keyCode ] = null;
 				_keyRepeat[ keyCode ] = null;
 				_keyStates[ keyCode ] = null;
+				_callbackDownParams[ keyCode ] = null;
 			}
 			
 			return this;
@@ -128,18 +140,26 @@ package io.plugin.pna.utils.mappers
 		 */
 		protected function onKeyDown( e: KeyboardEvent ): void
 		{
+			if ( !_keyDownMap[ e.keyCode ] )
+			{
+				return;
+			}
+			
 			if ( _keyStates[ e.keyCode ] == true && _keyRepeat[ e.keyCode ] == false )
 			{
 				return;
 			}
 			
-			for each( var f: * in _keyDownMap[ e.keyCode ] )
+			if ( _callbackDownParams[ e.keyCode ] )
 			{
-				if ( f is Function )
-				{
-					f();
-				}
+				
+				_keyDownMap[ e.keyCode ]( _callbackDownParams[ e.keyCode ] );
 			}
+			else
+			{
+				_keyDownMap[ e.keyCode ]();
+			}
+			
 			_keyStates[ e.keyCode ] = true;
 		}
 		
@@ -151,9 +171,15 @@ package io.plugin.pna.utils.mappers
 		 * 
 		 * @return	this Object
 		 */
-		public function addKeyUp( keyCode: uint, ...rest ): KeyMapper
+		public function addKeyUp( keyCode: uint, callback: Function, ...rest ): KeyMapper
 		{
-			_keyUpMap[ keyCode ] = rest;
+			
+			_keyUpMap[ keyCode ] = callback;
+			
+			if ( rest.length > 0 )
+			{
+				_callbackUpParams[ keyCode ] = rest;
+			}
 			
 			return this;
 		}
@@ -170,6 +196,7 @@ package io.plugin.pna.utils.mappers
 			if ( _keyUpMap[ keyCode ] )
 			{
 				_keyUpMap[ keyCode ] = null;
+				_callbackUpParams[ keyCode ] = null;
 			}
 			
 			return this;
@@ -182,15 +209,24 @@ package io.plugin.pna.utils.mappers
 		 */
 		protected function onKeyUp( e: KeyboardEvent ): void
 		{
-			for each( var f: * in _keyUpMap[ e.keyCode ] )
+			_keyStates[ e.keyCode ] = false;
+			
+			if ( !_keyUpMap[ e.keyCode ] )
 			{
-				if ( f is Function )
-				{
-					f();
-				}
+				return;
 			}
 			
-			_keyStates[ e.keyCode ] = false;
+			if ( _callbackUpParams[ e.keyCode ] )
+			{
+				_keyUpMap[ e.keyCode ]( _callbackUpParams[ e.keyCode ] );
+			}
+			else
+			{
+				_keyUpMap[ e.keyCode ]();
+			}
+			
+			
+			
 		}
 		
 		/**
