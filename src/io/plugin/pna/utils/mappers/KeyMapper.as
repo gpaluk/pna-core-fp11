@@ -237,6 +237,21 @@ package io.plugin.pna.utils.mappers
 		}
 		
 		/**
+		 * Removes all events associated with a key
+		 * 
+		 * @param	keyCode	The keyCode of the key to remove
+		 * 
+		 * @return	this Object
+		 */
+		public function removeKey( keyCode: uint ): KeyMapper
+		{
+			removeKeyDown( keyCode );
+			removeKeyUp( keyCode );
+			
+			return this;
+		}
+		
+		/**
 		 * Disposes of this Object ready for the GC
 		 */
 		public function dispose(): void
