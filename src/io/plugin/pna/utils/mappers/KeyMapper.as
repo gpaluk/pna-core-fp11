@@ -101,13 +101,13 @@ package io.plugin.pna.utils.mappers
 		 * only once, until the key is released.
 		 * 
 		 * @param	keyCode		The keycode to map, such as Keyboard.ENTER or Keyboard.B
-		 * @param	autoRepeat	Callback executed on each keyboard BIOS update when TRUE, update only occurs once when FALSE
 		 * @param	callback	A function that is called upon the relevant event dispatch
+		 * @param	autoRepeat	Callback executed on each keyboard BIOS update when TRUE, update only occurs once when FALSE
 		 * @param	rest		A list of params to be sent to the callback method
 		 * 
 		 * @return	This <code>KeyMapper</code> Object
 		 */
-		public function addKeyDown( keyCode: uint, autoRepeat: Boolean = false, callback: Function = null, ...rest ): KeyMapper
+		public function addKeyDown( keyCode: uint, callback: Function, autoRepeat: Boolean = false, ...rest ): KeyMapper
 		{
 			_keyDownMap[ keyCode ] = callback;
 			_keyRepeat[ keyCode ] = autoRepeat;
