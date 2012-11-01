@@ -122,6 +122,7 @@ package io.plugin.pna.loop
 		 */
 		public function reset(): void
 		{
+			
 			if ( !isRunning )
 			{
 				return;
