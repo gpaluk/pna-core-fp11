@@ -62,11 +62,11 @@ package io.plugin.pna.helpers
 		 */
 		public static function clamp( value: Number, min: Number, max: Number ): Number
 		{
-			if ( min < value )
+			if ( value < min )
 			{
 				value = min;
 			}
-			else if ( max > value )
+			else if ( value > max )
 			{
 				value = max;
 			}
