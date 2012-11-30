@@ -257,7 +257,7 @@ package io.plugin.pna.loop
 			
 			var alpha: Number = mAccumulator / mDT;
 			
-			onDraw.dispatch( mAccumulator );
+			onDraw.dispatch( frameTime );
 			onAlpha.dispatch( alpha );
 			
 			mDrawCount++;
