@@ -18,7 +18,8 @@ PNA exposes a content loader, game loop, plugin manager and other utilities.
 SIMPLE EXAMPLE
 =======================
 
-<code>// Your game class
+```actionscript
+// Your game class
 package io.plugin 
 {
 	import io.plugin.pna.PluginGame;
@@ -51,4 +52,4 @@ package io.plugin
 
 //After the entry point in your Document class
 var myGame: MyGame = new MyGame();
-myGame.run();</code>
+myGame.run();```
