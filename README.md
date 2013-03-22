@@ -52,4 +52,5 @@ package io.plugin
 
 //After the entry point in your Document class
 var myGame: MyGame = new MyGame();
-myGame.run();```
+myGame.run();
+```
